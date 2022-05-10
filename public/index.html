@@ -36,8 +36,8 @@
         </li>
     </ul>
     -->
-    <v-container fluid class="ma-0 pa-0 mt-5 d-flex flex-wrap justify-center">
-        <v-card v-for="pokemon in pokemons" :pokemon="pokemon"></v-card>
+    <v-container fluid class="ma-0 pa-0 mt-5 d-flex flex-wrap justify-center" style="min-width: 100%    ">
+        <pokemon v-for="pokemon in pokemons" :pokemon="pokemon"></pokemon>
     </v-container>
 
 

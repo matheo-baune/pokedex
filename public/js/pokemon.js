@@ -1,15 +1,16 @@
 
-
-Vue.component('v-card', {
+Vue.component('pokemon', {
     props : ['pokemon'],
-    template: `<v-container>
-                <v-container d-flex>
-                  <v-card-title><v-chip>{{pokemon.id}}</v-chip><span>{{pokemon.nom}}</v-card-title>
+    template: `<v-container fluid col-4><v-card>
+                <v-container d-flex :class="pokemon.types[0].couleur">
+                  <v-card-title><v-chip dark>{{pokemon.id}}</v-chip><span class="ms-2">{{pokemon.nom}}</v-card-title>
                 </v-container>
                 <v-container d-flex>
                   <div class="col-6">
                     <v-img :src="'assets/images/'+pokemon.image"></v-img>
-                    <v-sheet v-for="type in pokemon.types" :color="type.couleur"> {{type.nom}}</v-sheet>
+                    <v-container flex>
+                        <v-sheet v-for="type in pokemon.types" :color="type.couleur" class="p-2" style="border-radius: 40px"> {{type.nom}}</v-sheet>
+                    </v-container>
                   </div>
                   <div class="col-6">
                     <v-container>{{pokemon.description}}</v-container>
@@ -25,7 +26,7 @@ Vue.component('v-card', {
                     </v-simple-table>
                   </div>
                 </v-container>
-              </v-container>
+              </v-card></v-container>
     `
 })
 
