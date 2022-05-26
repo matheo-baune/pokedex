@@ -3,7 +3,9 @@ new Vue({
     vuetify: new Vuetify(),
     data: {
         pokemons:[],
-        types:[]
+        types:[],
+        defaultType:"Tous",
+        darkMode: false
     },
     created:function(){
         this.getTypes();
@@ -13,7 +15,8 @@ new Vue({
         getTypes:function(){
             let xhr = new XMLHttpRequest()
             xhr.onload = () => {
-                this.types = JSON.parse(xhr.responseText)
+                this.types.push('Tous')
+                JSON.parse(xhr.responseText).map(type => this.types.push(type))
             }
             xhr.open('get',"/types")
             xhr.send()

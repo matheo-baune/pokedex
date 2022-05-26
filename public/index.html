@@ -24,10 +24,16 @@
 
 
 <v-app id="app">
-    <select class="form-control" id="type" v-on:change="getPokemonsByType(document.querySelector('#type').value)">
-        <option selected value="all">Tous</option>
-        <option v-for="type in types" :key="type.nom"> {{type.nom}}</option>
-    </select>
+    <v-container fluid>
+        <v-select id="type" change="getPokemonsByType(document.querySelector('#type').value)"
+                  item-value="Tous"
+                  v-model="defaultType"
+                  :items="types"
+                  label="Type"
+                  outlined
+        ></v-select>
+    </v-container>
+
 
     <!--
     <ul>
@@ -37,7 +43,7 @@
     </ul>
     -->
     <v-container fluid class="ma-0 pa-0 mt-5 d-flex flex-wrap justify-center" style="min-width: 100%    ">
-        <pokemon v-for="pokemon in pokemons" :pokemon="pokemon"></pokemon>
+        <pokemon v-for="pokemon in pokemons" :pokemon="pokemon" :darkMode="darkMode"></pokemon>
     </v-container>
 
 

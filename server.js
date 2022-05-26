@@ -14,7 +14,7 @@ api.get('/', (req, res) => {
 })
 
 api.get('/types', (req,res) => {
-    res.send(database.types)
+    res.send(database.types.map(elt => elt.nom))
 })
 
 api.get('/pokemons/:type' , (req,res) => {
