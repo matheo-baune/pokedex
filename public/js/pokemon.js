@@ -1,7 +1,7 @@
 
 Vue.component('pokemon', {
     props : ['pokemon'],
-    template: `<v-container fluid col-3><v-card>
+    template: `<v-container fluid col-4><v-card>
                 <v-container d-flex :class="pokemon.types[0].couleur">
                   <v-card-title><v-chip dark>{{pokemon.id}}</v-chip><span class="ms-2">{{pokemon.nom}}</v-card-title>
                 </v-container>

@@ -19,10 +19,6 @@
     <title>Pokedex</title>
 </head>
 <body>
-<h1>Pokedex</h1>
-
-
-
 <v-app id="app">
     <v-container fluid>
         <v-select id="type" change="getPokemonsByType(document.querySelector('#type').value)"
@@ -34,21 +30,9 @@
         ></v-select>
     </v-container>
 
-
-    <!--
-    <ul>
-        <li v-for="pokemon in pokemons" :key="pokemon.id">
-            <strong>{{ pokemon.nom }}</strong>
-        </li>
-    </ul>
-    -->
     <v-container fluid class="ma-0 pa-0 mt-5 d-flex flex-wrap justify-center" style="min-width: 100%    ">
         <pokemon v-for="pokemon in pokemons" :pokemon="pokemon" :darkMode="darkMode"></pokemon>
     </v-container>
-
-
-
-
 </v-app>
 
 
