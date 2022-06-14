@@ -28,17 +28,19 @@
                           label="Types"
                           outlined
                           value="Tous"
+                          :dark="darkMode"
                 ></v-select>
             </v-col>
             <v-col :cols='"4"' class="d-flex justify-end me-5">
                 <v-switch
                         v-model="darkMode"
                         :label="`Thème sombre`"
+                        :dark="darkMode"
                 ></v-switch>
             </v-col>
         </v-row>
         <v-row class="mx-2">
-            <pokemon v-for="pokemon in pokemons" :pokemon="pokemon" :darkMode="darkMode"></pokemon>
+            <pokemon v-for="pokemon in pokemons" :pokemon="pokemon" :darkmode="darkMode"></pokemon>
         </v-row>
     </v-container>
 </v-app>
