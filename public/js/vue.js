@@ -41,6 +41,7 @@ new Vue({
             let xhr = new XMLHttpRequest()
             xhr.onload = () => {
                 this.pokemons = JSON.parse(xhr.responseText)
+                this.page = 1
                 this.majPage(this.page)
             }
             type = type === "Tous" ? "all" : type
