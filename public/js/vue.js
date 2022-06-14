@@ -35,6 +35,8 @@ new Vue({
                 this.pokemons = JSON.parse(xhr.responseText)
             }
             type = type === "Tous" ? "all" : type
+
+
             xhr.open('get',"/pokemons/"+type)
             xhr.send()
         }
