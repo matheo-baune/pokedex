@@ -8,7 +8,7 @@ Vue.component('pokemon', {
                     <v-col cols="6">
                         <v-img :src="'assets/images/'+pokemon.image"></v-img>
                         <v-container d-flex class="justify-md-space-around mt-2">
-                            <v-sheet :dark="darkmode" v-for="type in pokemon.types" :color="type.couleur" class="pa-2" style="border-radius: 40px"> {{type.nom}}</v-sheet>
+                            <v-sheet v-for="type in pokemon.types" :color="type.couleur" class="pa-2" style="border-radius: 40px"> {{type.nom}}</v-sheet>
                         </v-container>
                     </v-col>
                   <v-col cols="6">

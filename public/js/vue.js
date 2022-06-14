@@ -5,7 +5,9 @@ new Vue({
         pokemons:[],
         types:[],
         defaultType:"Tous",
-        darkMode: false
+        darkMode: false,
+        pokemonAffiches : [],
+        page : 1
     },
     created:function(){
         this.getTypes();
@@ -25,6 +27,12 @@ new Vue({
             let xhr = new XMLHttpRequest()
             xhr.onload = () => {
                 this.pokemons = JSON.parse(xhr.responseText)
+
+                for(const index in this.pokemons){
+                    if(index < 3){
+                        this.pokemonAffiches.push(this.pokemons[index])
+                    }
+                }
             }
             xhr.open('get',"/pokemons/all")
             xhr.send()
@@ -33,12 +41,14 @@ new Vue({
             let xhr = new XMLHttpRequest()
             xhr.onload = () => {
                 this.pokemons = JSON.parse(xhr.responseText)
+                this.majPage(this.page)
             }
             type = type === "Tous" ? "all" : type
-
-
             xhr.open('get',"/pokemons/"+type)
             xhr.send()
+        },
+        majPage:function(page){
+            this.pokemonAffiches = this.pokemons.slice((page-1)*3,(page-1)*3+3)
         }
     }
 });
