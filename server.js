@@ -1,5 +1,5 @@
 const express = require('express')
-const api = express()
+const app = express()
 const port = 3000
 
 const fs = require('fs')
@@ -7,27 +7,31 @@ const fs = require('fs')
 
 let database = JSON.parse(fs.readFileSync('pokedex.json'));
 
-api.use('/assets', express.static(__dirname + '/public'));
+app.use('/assets', express.static(__dirname + '/public'));
 
-api.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile((__dirname + '/public') + "/index.html")
 })
 
-api.get('/types', (req,res) => {
+app.get('/types', (req,res) => {
     res.send(database.types.map(elt => elt.nom))
 })
 
-api.get('/pokemons/:type' , (req,res) => {
+app.get('/pokemons/type/:type' , (req,res) => {
     res.send(getPokemonsByType(req.params.type))
 })
 
-api.listen(port, () => {
+app.get('/pokemons/name/:name', (req,res)=>{
+    res.send(database.pokemons.filter(pokemon => pokemon.nom.toLowerCase().includes(req.params.name)))
+})
+
+app.listen(port, () => {
     console.log(`Pokedex listening on port ${port}`)
 })
 
 
 function getPokemonsByType(typeChoosen){
-    return typeChoosen === "all" ?
+    return ['all','tous'].includes(typeChoosen.toLowerCase()) ?
         database.pokemons :
-        database.pokemons.filter( pokemon => pokemon.types.map(type => type.nom).includes(typeChoosen))
+        database.pokemons.filter( pokemon => pokemon.types.map(type => type.nom.toLowerCase()).includes(typeChoosen.toLowerCase()))
 }

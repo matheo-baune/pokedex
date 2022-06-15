@@ -7,11 +7,16 @@ new Vue({
         defaultType:"Tous",
         darkMode: false,
         pokemonAffiches : [],
-        page : 1
+        page : 1,
+        affichageMobile: false
     },
     created:function(){
         this.getTypes();
         this.getPokemons();
+    },
+    mounted:function(){
+        this.onResize();
+        window.addEventListener('resize', this.onResize, {passive:true})
     },
     methods:{
         getTypes:function(){
@@ -34,7 +39,7 @@ new Vue({
                     }
                 }
             }
-            xhr.open('get',"/pokemons/all")
+            xhr.open('get',"/pokemons/type/all")
             xhr.send()
         },
         getPokemonsByType:function(type){
@@ -44,12 +49,18 @@ new Vue({
                 this.page = 1
                 this.majPage(this.page)
             }
-            type = type === "Tous" ? "all" : type
-            xhr.open('get',"/pokemons/"+type)
+            xhr.open('get',"/pokemons/type/"+type)
             xhr.send()
         },
         majPage:function(page){
             this.pokemonAffiches = this.pokemons.slice((page-1)*3,(page-1)*3+3)
+        },
+        onResize:function(){
+            this.affichageMobile = window.innerWidth < 1000
         }
+    },
+    beforeDestoy:function(){
+        if(typeof window === "undefined") return;
+        window.removeEventListener('resize', this.onResize, {passive:true});
     }
 });
