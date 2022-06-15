@@ -22,7 +22,7 @@
         <v-row justify="space-between" align="center" class="mt-3 ms-2">
             <v-col
                     class="d-flex"
-                    sm="6"
+                    sm="5"
             >
                 <v-select id="type" v-on:change="getPokemonsByType" class="align-center"
                           item-value="Tous"
@@ -30,10 +30,24 @@
                           label="Types"
                           outlined
                           value="Tous"
-                          :dark="darkMode"
-                ></v-select>
+                          :dark="darkMode">
+                    <template v-slot:prepend>
+                        <v-img class="mb-10 p-0" style="width: 40px" :src="'assets/images/types/'+currentType+'.png'"></v-img>
+                    </template>
+                </v-select>
             </v-col>
-            <v-col :cols='"4"' class="d-flex justify-end me-5">
+            <v-col
+                    class="d-flex"
+                    cols="4"
+            >
+                <v-text-field
+                        :dark="darkMode"
+                        label="Search by name"
+                        v-on:keyup="getPokemonsByName"
+                        hide-details="auto"
+                ></v-text-field>
+            </v-col>
+            <v-col :cols='"2"' class="d-flex justify-end me-5">
                 <v-switch
                         v-model="darkMode"
                         :label="`Thème sombre`"
@@ -41,12 +55,31 @@
                 ></v-switch>
             </v-col>
         </v-row>
-        <v-row class="mx-2 my-2" v-if="!affichageMobile">
-            <pokemon v-for="pokemon in pokemonAffiches" :pokemon="pokemon" :darkmode="darkMode"></pokemon>
-            <v-col
-               cols="12"
-            >
+        <v-container v-if="pokemonAffiches.length>0">
+            <v-row class="mx-2 my-2" v-if="!affichageMobile">
+                <pokemon v-for="pokemon in pokemonAffiches" :pokemon="pokemon" :darkmode="darkMode"></pokemon>
+                <v-col
+                        cols="12"
+                >
+                    <v-pagination
+                            v-model="page"
+                            @input="majPage"
+                            :length="Math.ceil(this.pokemons.length/3)"
+                            :total-visible="7"
+                            :dark="darkMode"
+                            circle
+                    ></v-pagination>
+                </v-col>
+            </v-row>
+            <v-row v-else justify="center" align="center">
+                <v-expansion-panels
+                        v-model="panel"
+                        multiple
+                >
+                    <pokemon-mobile v-for="pokemon in pokemonAffiches" :pokemon="pokemon" :darkmode="darkMode"></pokemon-mobile>
+                </v-expansion-panels>
                 <v-pagination
+                        class="my-4"
                         v-model="page"
                         @input="majPage"
                         :length="Math.ceil(this.pokemons.length/3)"
@@ -54,21 +87,16 @@
                         :dark="darkMode"
                         circle
                 ></v-pagination>
-            </v-col>
-        </v-row>
-        <v-row v-else justify="center" align="center">
-            <v-expansion-panels>
-                <pokemon-mobile v-for="pokemon in pokemonAffiches" :pokemon="pokemon" :darkmode="darkMode"></pokemon-mobile>
-            </v-expansion-panels>
-            <v-pagination
-                    v-model="page"
-                    @input="majPage"
-                    :length="Math.ceil(this.pokemons.length/3)"
-                    :total-visible="7"
-                    :dark="darkMode"
-                    circle
-            ></v-pagination>
-        </v-row>
+            </v-row >
+        </v-container>
+        <v-container v-else>
+            <v-row
+                justify="center"
+                align="center"
+            >
+                <span>No pokemon find</span>
+            </v-row>
+        </v-container>
     </v-container>
 </v-app>
 

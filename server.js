@@ -17,12 +17,18 @@ app.get('/types', (req,res) => {
     res.send(database.types.map(elt => elt.nom))
 })
 
+app.get('/pokemons', (req,res)=>{
+    res.send(database.pokemons)
+})
 app.get('/pokemons/type/:type' , (req,res) => {
     res.send(getPokemonsByType(req.params.type))
 })
 
 app.get('/pokemons/name/:name', (req,res)=>{
-    res.send(database.pokemons.filter(pokemon => pokemon.nom.toLowerCase().includes(req.params.name)))
+    if(req.params.name.length === 0)
+        res.send(database.pokemons)
+    else
+        res.send(database.pokemons.filter(pokemon => pokemon.nom.toLowerCase().includes(req.params.name.toLowerCase())))
 })
 
 app.listen(port, () => {

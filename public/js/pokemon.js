@@ -6,7 +6,8 @@ Vue.component('pokemon', {
         <v-container d-flex :class="pokemon.types[0].couleur">
           <v-card-title>
             <v-chip dark>{{ pokemon.id }}</v-chip>
-            <span class="ms-2">{{ pokemon.nom }}</span></v-card-title>
+            <span class="ms-2">{{ pokemon.nom }}</span>
+          </v-card-title>
         </v-container>
         <v-container :class="((!darkmode)?'white':'black')+' d-flex'">
           <v-col cols="6">
@@ -48,7 +49,7 @@ Vue.component('pokemon-mobile', {
         >
           <v-col cols="6">
             <v-container d-flex class="justify-center">
-              <v-img :src="'assets/images/'+pokemon.image" style="max-width:250px"></v-img>
+              <v-img :src="'assets/images/'+pokemon.image" style="max-width:250px;width: auto"></v-img>
             </v-container>
             <v-container d-flex class="justify-space-around mt-2">
               <v-sheet v-for="type in pokemon.types" :color="type.couleur" class="pa-2" style="border-radius: 40px">

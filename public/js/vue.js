@@ -8,7 +8,10 @@ new Vue({
         darkMode: false,
         pokemonAffiches : [],
         page : 1,
-        affichageMobile: false
+        affichageMobile: false,
+        panel: [0],
+        currentType: ""
+
     },
     created:function(){
         this.getTypes();
@@ -45,11 +48,28 @@ new Vue({
         getPokemonsByType:function(type){
             let xhr = new XMLHttpRequest()
             xhr.onload = () => {
+                this.currentType = type
                 this.pokemons = JSON.parse(xhr.responseText)
                 this.page = 1
                 this.majPage(this.page)
             }
             xhr.open('get',"/pokemons/type/"+type)
+            xhr.send()
+        },
+        getPokemonsByName:function(event){
+            let value = event.target.value
+            let xhr = new XMLHttpRequest()
+            xhr.onload = () => {
+                this.pokemons = JSON.parse(xhr.responseText)
+                this.page = 1
+                this.majPage(this.page)
+            }
+
+            if(value.length === 0){
+                xhr.open('get',`/pokemons`)
+            }else{
+                xhr.open('get',`/pokemons/name/${value}`)
+            }
             xhr.send()
         },
         majPage:function(page){
